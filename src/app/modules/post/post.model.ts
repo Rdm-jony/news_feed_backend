@@ -1,8 +1,8 @@
 import { model, Schema } from "mongoose";
-import { IPrivacy } from "./post.interface";
+import { IPost, IPrivacy } from "./post.interface";
 import { commentSchema } from "../comment/comment.model";
 
-export const postSchema = new Schema(
+export const postSchema = new Schema<IPost>(
   {
     author: {
       type: Schema.Types.ObjectId,
@@ -15,13 +15,13 @@ export const postSchema = new Schema(
       required: true,
       trim: true,
     },
-    imageUrl: {
-      type: String,
+    images: {
+      type: [String],
       default: null,
     },
     privacy: {
       type: String,
-      enum: [Object.values(IPrivacy)],
+      enum: [...Object.values(IPrivacy)],
       default: IPrivacy.PUBLIC,
     },
     likes: [

@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { IComment } from "../comment/comment.interface";
 
 export enum IPrivacy {
@@ -7,7 +8,7 @@ export enum IPrivacy {
 
 export interface IPost {
     _id?: string;
-    author: string;
+    author: mongoose.Types.ObjectId;
     content: string;
     images?: string[] | null;
     privacy: IPrivacy;

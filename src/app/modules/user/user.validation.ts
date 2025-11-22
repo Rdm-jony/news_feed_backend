@@ -22,3 +22,14 @@ export const createUserSchema = z.object({
     isActive: z.boolean().optional().default(true),
 
 });
+
+export const userLoginSchema = z.object({
+
+    email: z
+        .email("Invalid email address").min(1, "email is required"),
+
+    password: z
+        .string()
+        .min(1, "Password is required"),
+
+});

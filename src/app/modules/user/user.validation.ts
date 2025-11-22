@@ -1,24 +1,24 @@
 import { z } from "zod";
 
 export const createUserSchema = z.object({
-    body: z.object({
-        firstName: z
-            .string()
-            .min(1, "First name is required"),
 
-        lastName: z
-            .string()
-            .min(1, "Last name is required"),
+    firstName: z
+        .string()
+        .min(1, "First name is required"),
 
-        email: z
-            .email("Invalid email address"),
+    lastName: z
+        .string()
+        .min(1, "Last name is required"),
 
-        password: z
-            .string()
-            .min(6, "Password must be at least 6 characters"),
+    email: z
+        .email("Invalid email address"),
 
-        avatarUrl: z.string().url().optional().nullable(),
+    password: z
+        .string()
+        .min(6, "Password must be at least 6 characters"),
 
-        isActive: z.boolean().optional().default(true),
-    }),
+    avatarUrl: z.string().url().optional().nullable(),
+
+    isActive: z.boolean().optional().default(true),
+
 });

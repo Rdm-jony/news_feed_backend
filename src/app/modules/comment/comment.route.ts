@@ -8,4 +8,6 @@ const router = Router()
 
 router.post("/create", checkAuth(), validateRequest(createCommentSchema), CommentController.addComment)
 
+router.get("/:postId", checkAuth(), CommentController.getCommentsWithReplies)
+
 export const commentRoutes = router

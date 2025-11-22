@@ -17,4 +17,16 @@ const addComment = catchAsync(async (req: Request, res: Response) => {
     })
 })
 
-export const CommentController={addComment}
+const getCommentsWithReplies = catchAsync(async (req: Request, res: Response) => {
+    const postId = req.params.postId
+    const comments = await CommentService.getCommentsWithReplies(postId)
+    sendResponse(res, {
+        data: comments,
+        message: "comments retrived successfully!",
+        statusCode: httpStatusCode.OK,
+        success: true,
+
+    })
+})
+
+export const CommentController = { addComment, getCommentsWithReplies }

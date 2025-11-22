@@ -49,13 +49,18 @@ export class QueryBuilder<T> {
     }
 
 
-    search(searChQueryFields: string[]): this {
-        const searchText = this.query.searchText || ""
-        const searChQuery: any = {
-            $or: searChQueryFields.map(field => ({ [field]: { $regex: searchText, $options: "i" } }))
+    search(searchableField: string[]): this {
+        const searchTerm = this.query?.searchTerm;
 
+        if (searchTerm) {
+            const searchQuery:any = {
+                $or: searchableField.map(field => ({
+                    [field]: { $regex: searchTerm, $options: "i" }
+                }))
+            };
+            this.modelQuery = this.modelQuery.find(searchQuery);
         }
-        this.modelQuery = this.modelQuery.find(searChQuery)
+
         return this;
     }
 

@@ -4,6 +4,7 @@ import { IPost } from "./post.interface"
 import { PostService } from "./post.service"
 import { sendResponse } from "../../utils/sendResponse"
 import httpStatusCode from "http-status-codes"
+import { JwtPayload } from "jsonwebtoken"
 
 const createPost = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const decodedToken = req.user
@@ -19,5 +20,18 @@ const createPost = catchAsync(async (req: Request, res: Response, next: NextFunc
         success: true
     })
 })
+const getAllPost = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const decodedToken = req.user as JwtPayload
+    const query = req.query as Record<string, string>
+    const posts = await PostService.getAllPost(query, decodedToken.userId)
+    sendResponse(res, {
+        data: posts.getPosts,
+        meta: posts.meta,
+        message: "post retrived successfully!",
+        statusCode: httpStatusCode.OK,
+        success: true,
 
-export const PostController = { createPost }
+    })
+})
+
+export const PostController = { createPost, getAllPost }

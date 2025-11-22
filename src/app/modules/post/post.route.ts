@@ -5,14 +5,16 @@ import { createPostSchema } from "./post.validation";
 import { validateRequest } from "../../middleware/validateRequest";
 import { PostController } from "./post.controller";
 
-const router=Router()
+const router = Router()
 
 router.post(
-  "/create",
-  checkAuth(),
-  multerUpload.array("files"), 
-  validateRequest(createPostSchema),
-  PostController.createPost
+    "/create",
+    checkAuth(),
+    multerUpload.array("files"),
+    validateRequest(createPostSchema),
+    PostController.createPost
 );
 
-export const postRoutes=router
+router.get("/all", checkAuth(), PostController.getAllPost)
+
+export const postRoutes = router

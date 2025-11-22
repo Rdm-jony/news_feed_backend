@@ -1,7 +1,11 @@
 import mongoose from "mongoose";
 
 export interface IComment {
-    postId: mongoose.Types.ObjectId;
-    author: mongoose.Types.ObjectId;
-    text: string;
+  _id?: string;
+  postId: mongoose.Types.ObjectId;
+  parentId?: mongoose.Types.ObjectId | null; // null for top-level comment, else parent comment id
+  author: mongoose.Types.ObjectId; 
+  text: string;
+  likes: mongoose.Types.ObjectId[]; 
+ 
 }

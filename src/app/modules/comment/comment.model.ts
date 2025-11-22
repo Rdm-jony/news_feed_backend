@@ -1,24 +1,43 @@
 import mongoose from "mongoose";
 import { IComment } from "./comment.interface";
 
-const commentSchema = new mongoose.Schema<IComment>({
+const commentSchema = new mongoose.Schema<IComment>(
+  {
     postId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Post",
-        required: true
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Post",
+      required: true,
     },
+
+    parentId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comment",
+      default: null, 
+    },
+
     author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+
+    text: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    likes: [
+      {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        required: true
-    },
-    text: {
-        type: String,
-        required: true
-    }
-}, {
-    timestamps: true
-});
+      },
+    ],
+  },
+  {
+    timestamps: true, 
+  }
+);
 
 commentSchema.index({ createdAt: -1 });
 

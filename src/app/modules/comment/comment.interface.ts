@@ -1,9 +1,7 @@
-import { IReply } from "../reply/reply.interface";
+import mongoose from "mongoose";
 
 export interface IComment {
-    _id?: string;
-    author: string;        
+    postId: mongoose.Types.ObjectId;
+    author: mongoose.Types.ObjectId;
     text: string;
-    likes: string[];       
-    replies: IReply[];
 }

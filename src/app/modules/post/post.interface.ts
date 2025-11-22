@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { IComment } from "../comment/comment.interface";
 
 export enum IPrivacy {
     PUBLIC = "public",
@@ -13,7 +12,6 @@ export interface IPost {
     images?: string[] | null;
     privacy: IPrivacy;
     likes: string[];
-    comments: IComment[];
     createdAt: Date;
     updatedAt: Date;
 }

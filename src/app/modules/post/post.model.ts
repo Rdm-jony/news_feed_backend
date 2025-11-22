@@ -1,6 +1,5 @@
 import { model, Schema } from "mongoose";
 import { IPost, IPrivacy } from "./post.interface";
-import { commentSchema } from "../comment/comment.model";
 
 export const postSchema = new Schema<IPost>(
   {
@@ -30,7 +29,6 @@ export const postSchema = new Schema<IPost>(
         ref: "User",
       },
     ],
-    comments: [commentSchema],
   },
   {
     timestamps: true,

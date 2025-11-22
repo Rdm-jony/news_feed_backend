@@ -1,27 +1,25 @@
-import { Schema } from "mongoose";
-import { replySchema } from "../reply/reply.model";
+import mongoose from "mongoose";
+import { IComment } from "./comment.interface";
 
-export const commentSchema = new Schema(
-  {
+const commentSchema = new mongoose.Schema<IComment>({
+    postId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Post",
+        required: true
+    },
     author: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
     },
     text: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    likes: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-      },
-    ],
-    replies: [replySchema],
-  },
-  {
-    timestamps: true,
-  }
-);
+        type: String,
+        required: true
+    }
+}, {
+    timestamps: true
+});
+
+commentSchema.index({ createdAt: -1 });
+
+export const Comment = mongoose.model<IComment>("Comment", commentSchema);

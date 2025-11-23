@@ -34,4 +34,18 @@ const getAllPost = catchAsync(async (req: Request, res: Response, next: NextFunc
     })
 })
 
-export const PostController = { createPost, getAllPost }
+const toggleLikeOnPost = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const decodedToken = req.user as JwtPayload
+    const postId = req.params.postId
+    const post = await PostService.toggleLikeOnPost(postId, decodedToken.userId)
+    sendResponse(res, {
+        data: post,
+        message: "post liked successfully!",
+        statusCode: httpStatusCode.OK,
+        success: true,
+
+    })
+})
+
+
+export const PostController = { createPost, getAllPost,toggleLikeOnPost }

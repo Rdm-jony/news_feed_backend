@@ -33,7 +33,30 @@ const getAllPost = async (query: Record<string, string>, userId: string) => {
 
 }
 
+
+export const toggleLikeOnPost = async (postId: string, userId: string) => {
+    const isLiked = await Post.exists({ _id: postId, likes: userId });
+
+    let updateQuery;
+
+    if (isLiked) {
+        updateQuery = { $pull: { likes: userId } };
+    } else {
+        updateQuery = { $addToSet: { likes: userId } };
+    }
+
+    const updatedPost = await Post.findByIdAndUpdate(
+        postId,
+        updateQuery,
+        { new: true }
+    );
+
+    return updatedPost;
+};
+
+
 export const PostService = {
+    toggleLikeOnPost,
     createPost,
     getAllPost
 };

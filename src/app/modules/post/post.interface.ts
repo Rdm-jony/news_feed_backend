@@ -11,7 +11,7 @@ export interface IPost {
     content: string;
     images?: string[] | null;
     privacy: IPrivacy;
-    likes: string[];
+    likes: mongoose.Types.ObjectId[];
     createdAt: Date;
     updatedAt: Date;
 }

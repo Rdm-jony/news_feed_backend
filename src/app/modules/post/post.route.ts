@@ -17,4 +17,6 @@ router.post(
 
 router.get("/all", checkAuth(), PostController.getAllPost)
 
+router.patch("/like-toggle/:postId", checkAuth(), PostController.toggleLikeOnPost)
+
 export const postRoutes = router

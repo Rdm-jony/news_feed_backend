@@ -8,7 +8,7 @@ import { verifyToken } from "../utils/jwt"
 
 export const checkAuth = () => async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const accessToken = req.headers.authorization || req.cookies.accessToken
+        const accessToken = req.headers?.authorization || req.cookies?.accessToken
         if (!accessToken) {
             throw new AppError(403, "No Token Recieved")
         }
@@ -21,7 +21,7 @@ export const checkAuth = () => async (req: Request, res: Response, next: NextFun
         if (!isUserExist.isActive) {
             throw new AppError(httpStatusCode.BAD_REQUEST, `User is not active`)
         }
-     
+
         req.user = verifiedToken
 
         next()

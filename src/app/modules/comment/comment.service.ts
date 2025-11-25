@@ -5,15 +5,44 @@ import { IComment } from "./comment.interface";
 import { Comment } from "./comment.model";
 import httpStatusCode from "http-status-codes"
 
-const addComment = async (payload: Partial<IComment>, userId: string) => {
-    const findPost = await Post.findById(payload.postId)
+
+export const addComment = async (
+  payload: Partial<IComment>,
+  userId: string
+) => {
+  const session = await mongoose.startSession();
+
+  try {
+    session.startTransaction();
+
+    const findPost = await Post.findById(payload.postId).session(session);
     if (!findPost) {
-        throw new AppError(httpStatusCode.NOT_FOUND, "post not found")
+      throw new AppError(httpStatusCode.NOT_FOUND, "Post not found");
     }
 
-    const newComment = await Comment.create({ ...payload, author: userId })
-    return newComment
-}
+    const newComment = await Comment.create(
+      [{ ...payload, author: userId }],
+      { session }
+    );
+
+    const commentCount = await Comment.countDocuments({
+      postId: payload.postId,
+    }).session(session);
+
+    findPost.comments = commentCount;
+    await findPost.save({ session });
+
+    await session.commitTransaction();
+    session.endSession();
+
+    return newComment[0];
+  } catch (err) {
+    await session.abortTransaction();
+    session.endSession();
+    throw err;
+  }
+};
+
 
 const getCommentsWithReplies = async (postId: string) => {
 
@@ -25,7 +54,6 @@ const getCommentsWithReplies = async (postId: string) => {
     const objectId = new mongoose.Types.ObjectId(postId);
 
     const comments = await Comment.aggregate([
-        // Match only comments for this post
         { $match: { postId: objectId } },
 
         //Lookup replies (parentId = _id)

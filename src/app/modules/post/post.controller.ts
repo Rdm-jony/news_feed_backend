@@ -46,6 +46,17 @@ const toggleLikeOnPost = catchAsync(async (req: Request, res: Response, next: Ne
 
     })
 })
+const getLikedUsers = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const postId = req.params.postId
+    const likedUser = await PostService.getLikedUsers(postId)
+    sendResponse(res, {
+        data: likedUser,
+        message: "liked retrived successfully!",
+        statusCode: httpStatusCode.OK,
+        success: true,
+
+    })
+})
 
 
-export const PostController = { createPost, getAllPost,toggleLikeOnPost }
+export const PostController = { createPost, getAllPost, toggleLikeOnPost,getLikedUsers }

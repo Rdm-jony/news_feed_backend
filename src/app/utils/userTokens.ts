@@ -3,7 +3,7 @@ import { envVars } from "../config/env";
 import { generateToken, verifyToken } from "./jwt";
 import { User } from "../modules/user/user.model";
 import httpStatusCode from "http-status-codes"
-import { IUser } from "../modules/user/user.type";
+import { IUser } from "../modules/user/user.interface";
 
 export const createUserTokens = (user: Partial<IUser>) => {
     const jwtPayload = {

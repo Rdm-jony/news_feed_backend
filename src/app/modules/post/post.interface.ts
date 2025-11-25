@@ -10,6 +10,7 @@ export interface IPost {
     author: mongoose.Types.ObjectId;
     content: string;
     images?: string[] | null;
+    comments:number;
     privacy: IPrivacy;
     likes: mongoose.Types.ObjectId[];
     createdAt: Date;

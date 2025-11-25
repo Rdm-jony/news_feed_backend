@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.postRoutes = void 0;
+const express_1 = require("express");
+const CheckAuth_1 = require("../../middleware/CheckAuth");
+const multer_confilg_1 = require("../../config/multer.confilg");
+const post_validation_1 = require("./post.validation");
+const validateRequest_1 = require("../../middleware/validateRequest");
+const post_controller_1 = require("./post.controller");
+const router = (0, express_1.Router)();
+router.post("/create", (0, CheckAuth_1.checkAuth)(), multer_confilg_1.multerUpload.array("files"), (0, validateRequest_1.validateRequest)(post_validation_1.createPostSchema), post_controller_1.PostController.createPost);
+router.get("/all", (0, CheckAuth_1.checkAuth)(), post_controller_1.PostController.getAllPost);
+router.patch("/like-toggle/:postId", (0, CheckAuth_1.checkAuth)(), post_controller_1.PostController.toggleLikeOnPost);
+router.get("/liked/:postId", (0, CheckAuth_1.checkAuth)(), post_controller_1.PostController.getLikedUsers);
+exports.postRoutes = router;

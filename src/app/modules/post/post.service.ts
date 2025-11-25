@@ -22,7 +22,7 @@ const getAllPost = async (query: Record<string, string>, userId: string) => {
         .sort()
         .fields()
         .paginate()
-        .build()
+        .build().populate("author")
     const meta = await queryBuilder.getMeta()
 
     return {
@@ -55,8 +55,23 @@ export const toggleLikeOnPost = async (postId: string, userId: string) => {
 };
 
 
+const getLikedUsers = async (postId: string) => {
+    const post = await Post.findById(postId)
+        .select("likes")
+        .populate("likes", "firstName lastName avatarUrl");
+    if (!post) {
+        throw new Error("Post not found");
+    }
+
+    return post.likes;
+};
+
+
+
+
 export const PostService = {
     toggleLikeOnPost,
     createPost,
-    getAllPost
+    getAllPost,
+    getLikedUsers
 };

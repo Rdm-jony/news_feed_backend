@@ -18,6 +18,7 @@ export const postSchema = new Schema<IPost>(
       type: [String],
       default: null,
     },
+    comments: { type: Number, default: 0 },
     privacy: {
       type: String,
       enum: [...Object.values(IPrivacy)],
@@ -36,7 +37,7 @@ export const postSchema = new Schema<IPost>(
 );
 
 // Indexes
-postSchema.index({ createdAt: -1 }); 
-postSchema.index({ content: "text" }); 
+postSchema.index({ createdAt: -1 });
+postSchema.index({ content: "text" });
 
 export const Post = model("Post", postSchema);

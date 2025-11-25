@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.userRoutes = void 0;
+const express_1 = require("express");
+const multer_confilg_1 = require("../../config/multer.confilg");
+const validateRequest_1 = require("../../middleware/validateRequest");
+const user_validation_1 = require("./user.validation");
+const user_controller_1 = require("./user.controller");
+const CheckAuth_1 = require("../../middleware/CheckAuth");
+const router = (0, express_1.Router)();
+router.post("/register", multer_confilg_1.multerUpload.single("file"), (0, validateRequest_1.validateRequest)(user_validation_1.createUserSchema), user_controller_1.UserController.createUser);
+router.post("/login", (0, validateRequest_1.validateRequest)(user_validation_1.userLoginSchema), user_controller_1.UserController.userLogIn);
+router.get("/me", (0, CheckAuth_1.checkAuth)(), user_controller_1.UserController.getMe);
+exports.userRoutes = router;

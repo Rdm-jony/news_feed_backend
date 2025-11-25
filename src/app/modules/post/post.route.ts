@@ -18,5 +18,6 @@ router.post(
 router.get("/all", checkAuth(), PostController.getAllPost)
 
 router.patch("/like-toggle/:postId", checkAuth(), PostController.toggleLikeOnPost)
+router.get("/liked/:postId", checkAuth(), PostController.getLikedUsers)
 
 export const postRoutes = router

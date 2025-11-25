@@ -1,6 +1,6 @@
 import AppError from "../../errorHeplers/AppError"
 import { User } from "./user.model"
-import { IUser } from "./user.type"
+import { IUser } from "./user.interface"
 import httpStatusCode from "http-status-codes"
 import bcrypt from "bcryptjs"
 import { envVars } from "../../config/env"
@@ -51,4 +51,4 @@ const getMe = async (userId: string) => {
 }
 
 
-export const UserService = { createUser, getMe,userLogIn }
+export const UserService = { createUser, getMe, userLogIn }

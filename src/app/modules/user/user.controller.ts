@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { catchAsync } from "../../utils/catchAsync";
-import { IUser } from "./user.type";
+import { IUser } from "./user.interface";
 import { UserService } from "./user.service";
 import { sendResponse } from "../../utils/sendResponse";
 import httpStatusCode from "http-status-codes"
